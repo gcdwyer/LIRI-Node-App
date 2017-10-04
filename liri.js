@@ -1,10 +1,6 @@
-var twitterKey = require("./keys.js");
+var Twitter = require("twitter");
 
-// APIs
-var Twitter = require('twitter');
-
-
-var params = {screen_name: '@gcdwyer1'};
+var keys = require("./keys.js");
 
 
 
@@ -12,22 +8,41 @@ var params = {screen_name: '@gcdwyer1'};
 var myArgs = process.argv[2];
 
 
+
+
 if (myArgs === "my-tweets") {
 
-	// Display last 20 tweets and when they were created
-	// console.log("Tweets");
+	var client = new Twitter(keys);
+		
+	var params = {screen_name: '@gcdwyer1'};
 
-	twitterKey.get('statuses/user_timeline', params, function(error, tweets, response) {
+	console.log("Got to Tweets");
 
-  		if (!error) {
+	client.get('statuses/user_timeline', params, function(error, tweets, response) {
 
-    		console.log(tweets);
+  		if (error) {
+
+    		console.log(error);
+
+  		} else {
+
+  			console.log("Got inside Tweets");
+
+  			for (var i = 0; i < tweets.length; i++) {
+
+	  			var test = JSON.stringify(tweets[0].text + " @ " + tweets[0].created_at, null, 2);
+
+	  			console.log(test);
+
+  			}
 
   		}
 
 	});
 
 }
+
+
 
 if (myArgs === "spotify-this-song") {
 
