@@ -8,38 +8,30 @@ var keys = require("./keys.js");
 var myArgs = process.argv[2];
 
 
-
-
 if (myArgs === "my-tweets") {
 
 	var client = new Twitter(keys);
 		
 	var params = {screen_name: '@gcdwyer1'};
 
-	console.log("Got to Tweets");
-
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
 
   		if (error) {
-
     		console.log(error);
 
   		} else {
 
-  			console.log("Got inside Tweets");
+  			for (var i = 0; i < 20; i++) {
 
-  			for (var i = 0; i < tweets.length; i++) {
+  				// var test = (tweets[0]);
 
-	  			var test = JSON.stringify(tweets[0].text + " @ " + tweets[0].created_at, null, 2);
+	  			var twit = JSON.stringify("@" + tweets[i].user.screen_name + " tweeted '" + tweets[i].text + "' on " + tweets[0].created_at, null, 2);
 
-	  			console.log(test);
+	  			console.log(twit);
 
   			}
-
   		}
-
 	});
-
 }
 
 
