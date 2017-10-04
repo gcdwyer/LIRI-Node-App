@@ -1,12 +1,17 @@
 var Twitter = require("twitter");
+var spotify = require("spotify");
+
 
 var keys = require("./keys.js");
-
 
 
 // pulls 3rd entry from command line
 var myArgs = process.argv[2];
 
+
+
+// TWITTER =================================================================================================
+// node liri.js my-tweets
 
 if (myArgs === "my-tweets") {
 
@@ -35,14 +40,45 @@ if (myArgs === "my-tweets") {
 }
 
 
+// SPOTIFY =================================================================================================
+// node liri.js spotify-this-song '<song name here>'
 
 if (myArgs === "spotify-this-song") {
 
-	// Display artist, song name, link and album
-
-	// if no song provided, play Ace of Base
-
 	console.log("Spotify");
+
+	var song = "";
+
+	var nodeArgs = process.argv
+
+	for (var i = 3; i < nodeArgs.length; i++) {
+
+		song = song + " " + nodeArgs[i];
+
+	}
+
+	console.log("song: " + song);
+
+
+	// spotify.search({ type: 'track', query: 'dancing in the moonlight' }, function(error, data) {
+
+	//     if (error) {
+
+	//         console.log(error);
+
+	//         return;
+
+	//     } else {
+
+
+
+	//     	// Display artist, song name, link and album
+
+	// 		// if no song provided, play Ace of Base
+
+	// 	}
+
+	// });
 
 }
 
