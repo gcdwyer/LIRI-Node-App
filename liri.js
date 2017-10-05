@@ -75,19 +75,24 @@ if (myArgs === "spotify-this-song") {
 
 	        return;
 
-	    } else {
+	    } else if (song == "") {
+
+	    	song = "I saw the sign";
+
+	    	console.log("missing song: " + song);
+
+	    }
+
+	    else {
 
 	    	// Display artist, song name, link and album
 
 			// if no song provided, play Ace of Base
 
-			console.log(data.tracks.items[0].album.artists[0].name);
-
-			console.log(data.tracks.items[0].name);
-
-			console.log(data.tracks.items[0].album.external_urls.spotify);
-
-			console.log(data.tracks.items[0].album.name);
+			console.log("Artist Name: " + data.tracks.items[0].album.artists[0].name);
+			console.log("Song Name: " + data.tracks.items[0].name);
+			console.log("Link to Song: " + data.tracks.items[0].album.external_urls.spotify);
+			console.log("Album Name: " + data.tracks.items[0].album.name);
 
 		}
 
