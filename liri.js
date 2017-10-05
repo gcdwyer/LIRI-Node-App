@@ -1,13 +1,11 @@
 var Twitter = require("twitter");
 var Spotify = require('node-spotify-api');
-
+var request = require("request");
 
 var keys = require("./keys.js");
 
-
 // pulls 3rd entry from command line
 var myArgs = process.argv[2];
-
 
 
 // TWITTER =================================================================================================
@@ -97,10 +95,6 @@ if (myArgs === "spotify-this-song") {
 
 }
 
-
-
-
-
 // MOVIE ========================================================================================
 // node liri.js movie-this '<movie name here>'
 // 40e9cece
@@ -110,15 +104,56 @@ if (myArgs === "movie-this") {
 
 	// if no movie provided, output Mr Nobody
 
-	console.log("Movie");
+
+
+	var movieName = "";
+	var movieArr = [];
+
+	for (var i = 3; i < process.argv.length; i++) {
+
+		movieArr.push(process.argv[i]);
+
+	}
+
+	console.log(movieArr);
+
+	if (!process.argv[3]) {
+
+		movieName = "Mr.+Nobody";
+
+		console.log("Mr Nobdy picked");
+
+	} else {
+
+		movieName = movieArr.join("+");
+
+		console.log("movie: " + movieName);
+
+	}
+
+	var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=40e9cece";
+
+	console.log("url: " + queryUrl);
+
+	request(queryUrl, function(error, response, body) {
+
+
+	    if (!error && response.statusCode === 200) {
+
+		    console.log("Title: " + JSON.parse(body).Title);
+		    console.log("Released: " + JSON.parse(body).Year);
+		    console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
+		    console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+		    console.log("Country Produced: " + JSON.parse(body).Country);
+		    console.log("Language: " + JSON.parse(body).Language);
+		    console.log("Plot: " + JSON.parse(body).Plot);
+		    console.log("Actors: " + JSON.parse(body).Actors);
+
+	    }
+
+	});
 
 }
-
-
-
-
-
-
 
 
 if (myArgs === "do-what-it-says") {
