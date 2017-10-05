@@ -1,5 +1,5 @@
 var Twitter = require("twitter");
-var spotify = require("spotify");
+var Spotify = require('node-spotify-api');
 
 
 var keys = require("./keys.js");
@@ -59,26 +59,39 @@ if (myArgs === "spotify-this-song") {
 
 	console.log("song: " + song);
 
+	var spotify = new Spotify({
 
-	// spotify.search({ type: 'track', query: 'dancing in the moonlight' }, function(error, data) {
+	    id: "9b6cc6da5ae44cd1a4e4c76cd228112c",
+	    secret: "34872fcda78b446386c93f52955a53a9"
 
-	//     if (error) {
-
-	//         console.log(error);
-
-	//         return;
-
-	//     } else {
+	});
 
 
+	spotify.search({ type: 'track', query: song }, function(err, data) {
 
-	//     	// Display artist, song name, link and album
+	    if (err) {
 
-	// 		// if no song provided, play Ace of Base
+	        console.log(err);
 
-	// 	}
+	        return;
 
-	// });
+	    } else {
+
+	    	// Display artist, song name, link and album
+
+			// if no song provided, play Ace of Base
+
+			console.log(data.tracks.items[0].album.artists[0].name);
+
+			console.log(data.tracks.items[0].name);
+
+			console.log(data.tracks.items[0].album.external_urls.spotify);
+
+			console.log(data.tracks.items[0].album.name);
+
+		}
+
+	});
 
 }
 
