@@ -22,7 +22,9 @@ if (myArgs === "my-tweets") {
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
 
   		if (error) {
+
     		console.log(error);
+    		return;
 
   		} else {
 
@@ -45,8 +47,6 @@ if (myArgs === "my-tweets") {
 
 if (myArgs === "spotify-this-song") {
 
-	console.log("Spotify");
-
 	var song = "";
 
 	var nodeArgs = process.argv
@@ -57,49 +57,53 @@ if (myArgs === "spotify-this-song") {
 
 	}
 
-	console.log("song: " + song);
+	if (song == "") {
 
-	var spotify = new Spotify({
+		song = "The+Sign";
 
-	    id: "9b6cc6da5ae44cd1a4e4c76cd228112c",
-	    secret: "34872fcda78b446386c93f52955a53a9"
+		findSong();
 
-	});
+	} else {
 
+		findSong();
 
-	spotify.search({ type: 'track', query: song }, function(err, data) {
+	}
 
-	    if (err) {
+	function findSong () {
 
-	        console.log(err);
+		var spotify = new Spotify({
+		    id: "9b6cc6da5ae44cd1a4e4c76cd228112c",
+		    secret: "34872fcda78b446386c93f52955a53a9"
+		});
 
-	        return;
+		spotify.search({ type: 'track', query: '"' + song + '"' }, function(error, data) {
 
-	    } else if (song == "") {
+		    if (error) {
 
-	    	song = "I saw the sign";
+		        console.log(error);
+		        return;
 
-	    	console.log("missing song: " + song);
+		    } else {
 
-	    }
+				console.log("Artist Name: " + data.tracks.items[0].album.artists[0].name);
+				console.log("Song Name: " + data.tracks.items[0].name);
+				console.log("Link to Song: " + data.tracks.items[0].album.external_urls.spotify);
+				console.log("Album Name: " + data.tracks.items[0].album.name);
 
-	    else {
+			}
+		});
 
-	    	// Display artist, song name, link and album
-
-			// if no song provided, play Ace of Base
-
-			console.log("Artist Name: " + data.tracks.items[0].album.artists[0].name);
-			console.log("Song Name: " + data.tracks.items[0].name);
-			console.log("Link to Song: " + data.tracks.items[0].album.external_urls.spotify);
-			console.log("Album Name: " + data.tracks.items[0].album.name);
-
-		}
-
-	});
+	}
 
 }
 
+
+
+
+
+// MOVIE ========================================================================================
+// node liri.js movie-this '<movie name here>'
+// 40e9cece
 if (myArgs === "movie-this") {
 
 	// Display movie title, year, rating, rotten rating, country, language, plot and actors
@@ -109,6 +113,13 @@ if (myArgs === "movie-this") {
 	console.log("Movie");
 
 }
+
+
+
+
+
+
+
 
 if (myArgs === "do-what-it-says") {
 
